@@ -43,7 +43,7 @@
 Giriş yapıldıktan sonra verileri okuyabiliriz.
 #### Kullanıcı Bilgilerini Güncelle
 
-    $bionluk->update_basic_info("ahmet","bilardo","Burası başlık","brief","açıklama");
+    $bionluk->update_basic_info("ahmet","fidan","Burası başlık","brief","açıklama");
 
 
 
@@ -66,6 +66,14 @@ Giriş yapıldıktan sonra verileri okuyabiliriz.
     $messages = $bionluk->chat->getMessages("archive");
     //alternative
     $archive = $bionluk->chat->archive();
+
+#### Kullanıcıya Mesaj Gönder
+     // Okunmamış mesajlardan ilk mesaja mesaj gönderir.
+     $messages = $bionluk->chat->getMessages('unread');
+     $firstChat = $messages["conversations"][0];
+     $firstChat_id = $firstChat["c_uuid"];
+     $message = "hello world";
+     $bionluk->chat->send($message,$firstChat_id);	
 
 ### Kullancıyı Arşive Ekle
 
@@ -102,6 +110,17 @@ Kullanıcının ilanlarıyla ilgili işlemler.
     //aktif ilanları getir
     $bionluk->ads->notConfirmed();
 
+
+
+## Örnek: Okunamamış tüm mesajlara cevap yaz
+     // Okunmamış mesajlardan ilk mesaja mesaj gönderir.
+     $messages = $bionluk->chat->getMessages('unread');
+     foreach($messages["conversations"] as $conversation){
+     	$conersation_id = $conversation["c_uuid"];
+     	$message = "hello world";
+     	$bionluk->chat->send($message,$conersation_id);
+     }
+    		
 
 
 Aksiyonlar burada sona eriyor, daha fazlası için projeyi yıldızlamayı unutmayın.
